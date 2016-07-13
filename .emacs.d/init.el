@@ -21,6 +21,12 @@
 (set-buffer-file-coding-system 'utf-8)
 (setq default-buffer-file-coding-system 'utf-8)
 
+(set-face-attribute 'default nil
+		    :family "Consolas"
+		    :height 120)
+
+(set-fontset-font t 'japanese-jisx0208 (font-spec :family "Meiryo"))
+
 ;; フォントロックモード (強調表示等) を有効にする
 (global-font-lock-mode t)
 
@@ -37,7 +43,11 @@
 (setq next-line-add-newlines nil) 
 
 ;; C-x l で goto-line を実行
+
 (define-key ctl-x-map "l" 'goto-line) 
+
+;; C-mにnewline-andindentを割り当てる。初期値はnewline
+(global-set-key (kbd "C-m") 'newline-and-indent)
 
 ;; 時間を表示
 (display-time) 
@@ -53,6 +63,9 @@
 
 ;; C-h に割り当てられている関数 help-command を C-x C-h に割り当てる
 (define-key global-map "\C-x\C-h" 'help-command)
+
+;; C-x gにgoto-lineを割り当てる
+(global-set-key (kbd "C-x g") 'goto-line)
 
 ;; C-o に動的略語展開機能を割り当てる
 (define-key global-map "\C-o" 'dabbrev-expand)
@@ -138,3 +151,14 @@
 ;(global-linum-mode 1)
 ;(setq linum-format "%4d ")
 ;(global-set-key [f6] 'linum-mode)
+
+(global-set-key (kbd "C-x C-b") 'anything-for-files)
+(global-set-key (kbd "M-y") 'anything-show-kill-ring)
+(global-set-key (kbd "M-o") 'occur-by-moccur)
+(setq elscreen-prefix-key (kbd "C-t"))
+(setq moccur-split-word t)
+(require 'wgrep nil t)
+
+;; cua-modeの設定
+(cua-mode t)
+(setq cua-enable-cua-keys nil)  ; CUAキーバインドを無効にする

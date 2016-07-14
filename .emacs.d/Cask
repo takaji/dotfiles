@@ -32,6 +32,9 @@
 (depends-on "color-moccur")
 (depends-on "wgrep")
 (depends-on "elscreen")
+(depends-on "moccur-edit" :git "https://github.com/takaji/moccur-edit.git")
+;;(depends-on "anything-c-moccur" :git "https://github.com/takaji/anything-c-moccur.git")
+(depends-on "simpleclip")
 
 ;; Clojure
 (depends-on "clojure-mode")

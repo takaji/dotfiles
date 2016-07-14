@@ -25,7 +25,7 @@
 		    :family "Consolas"
 		    :height 120)
 
-(set-fontset-font t 'japanese-jisx0208 (font-spec :family "Meiryo"))
+;(set-fontset-font t 'japanese-jisx0208 (font-spec :family "Meiryo"))
 
 ;; フォントロックモード (強調表示等) を有効にする
 (global-font-lock-mode t)
@@ -63,9 +63,6 @@
 
 ;; C-h に割り当てられている関数 help-command を C-x C-h に割り当てる
 (define-key global-map "\C-x\C-h" 'help-command)
-
-;; C-x gにgoto-lineを割り当てる
-(global-set-key (kbd "C-x g") 'goto-line)
 
 ;; C-o に動的略語展開機能を割り当てる
 (define-key global-map "\C-o" 'dabbrev-expand)
@@ -137,6 +134,14 @@
 
 	  )
 
+;;; === clojure-mode ====
+(add-hook 'clojure-mode-hook
+	  (lambda ()
+	    (global-auto-complete-mode t)
+	    )
+	  )
+
+
 ;; リセットされた場合に UTF-8 に戻す
 ;; http://0xcc.net/blog/archives/000041.html
 (set-default-coding-systems 'utf-8)
@@ -159,6 +164,11 @@
 (setq moccur-split-word t)
 (require 'wgrep nil t)
 
-;; cua-modeの設定
+;;; cua-modeの設定
 (cua-mode t)
 (setq cua-enable-cua-keys nil)  ; CUAキーバインドを無効にする
+
+;;; simpleclipの設定
+(simpleclip-mode t)
+(global-set-key (kbd "C-c w") 'simpleclip-copy) ; C-c wでクリップボードにコピー
+(global-set-key (kbd "C-c y") 'simpleclip-paste) ; C-c yでクリップボードからペースト

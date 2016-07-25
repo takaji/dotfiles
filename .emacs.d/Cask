@@ -35,6 +35,7 @@
 (depends-on "moccur-edit" :git "https://github.com/takaji/moccur-edit.git")
 ;;(depends-on "anything-c-moccur" :git "https://github.com/takaji/anything-c-moccur.git")
 (depends-on "simpleclip")
+(depends-on "company")
 
 ;; Clojure
 (depends-on "clojure-mode")
@@ -42,6 +43,7 @@
 (depends-on "ac-cider")
 (depends-on "clojure-cheatsheet")
 (depends-on "slamhound")
+(depends-on "clj-refactor")
 
 (depends-on "smartparens")
 (depends-on "rainbow-delimiters")

@@ -43,7 +43,6 @@
 (setq next-line-add-newlines nil) 
 
 ;; C-x l で goto-line を実行
-
 (define-key ctl-x-map "l" 'goto-line) 
 
 ;; C-mにnewline-andindentを割り当てる。初期値はnewline
@@ -57,6 +56,9 @@
 
 ;; メニューバーを消す
 (menu-bar-mode -1)
+
+;; 現在行をハイライト
+;;(global-hl-line-mode t)
 
 ;; C-h でカーソルの左にある文字を消す
 (define-key global-map "\C-h" 'delete-backward-char)
@@ -103,7 +105,25 @@
 ;; The local variables list in .emacs と言われるのを抑止
 (add-to-list 'ignored-local-variables 'syntax) 
 
+;; リセットされた場合に UTF-8 に戻す
+;; http://0xcc.net/blog/archives/000041.html
+(set-default-coding-systems 'utf-8)
 
+;;; *.~ とかのバックアップファイルを作らない
+;(setq make-backup-files nil)
+;;; .#* とかのバックアップファイルを作らない
+;(setq auto-save-default nil)
+
+;;
+;; backup の保存先
+;;
+(setq backup-directory-alist
+      (cons (cons ".*" (expand-file-name "~/.emacs.d/backup"))
+	    backup-directory-alist))
+
+
+(setq auto-save-file-name-transforms
+      `((".*", (expand-file-name "~/.emacs.d/backup/") t)))
 
 ;; cperl-mode の設定。インデントをいい感じに、他。
 (autoload 'perl-mode "cperl-mode" "alternate mode for editing Perl programs" t)
@@ -135,34 +155,81 @@
 	  )
 
 ;;; === clojure-mode ====
-(add-hook 'clojure-mode-hook
-	  (lambda ()
-	    (global-auto-complete-mode t)
-	    )
-	  )
+(use-package clojure-mode
+  :init
+  (add-hook 'clojure-mode-hook #'yas-minor-mode)
+  (add-hook 'clojure-mode-hook #'subword-mode)
+  (add-hook 'clojure-mode-hook #'rainbow-delimiters-mode)
+  :diminish subword-mode)
 
+;;; === cider-mode ===
+(use-package cider
+  :init
+  (add-hook 'cider-mode-hook #'clj-refactor-mode)
+  (add-hook 'cider-mode-hook #'company-mode)
+  (add-hook 'cider-mode-hook #'eldoc-mode)
+  (add-hook 'cider-repl-mode-hook #'company-mode)
+  (add-hook 'cider-repl-mode-hook #'eldoc-mode)
+  :diminish subword-mode
+  :config
+  (setq nrepl-log-messages t
+        cider-repl-display-in-current-window t
+        cider-repl-use-clojure-font-lock t
+        cider-prompt-save-file-on-load 'always-save
+        cider-font-lock-dynamically '(macro core function var)
+        cider-overlays-use-font-lock t)
+  (cider-repl-toggle-pretty-printing))
 
-;; リセットされた場合に UTF-8 に戻す
-;; http://0xcc.net/blog/archives/000041.html
-(set-default-coding-systems 'utf-8)
+;;; === clj-refactor-mode ===
+(use-package clj-refactor
+  :diminish clj-refactor-mode
+  :config (cljr-add-keybindings-with-prefix "C-c j"))
 
-;;; *.~ とかのバックアップファイルを作らない
-(setq make-backup-files nil)
-;;; .#* とかのバックアップファイルを作らない
-;(setq auto-save-default nil)
+;;; === company-mode ===
+(use-package company
+  :config
+  (global-company-mode)
+  (setq company-idle-delay 0.1
+        company-minimum-prefix-length 2
+        company-selection-wrap-around t)
 
-;;; 行番号の表示F6キーで切り替え
-;(require 'linum)
-;(global-linum-mode 1)
-;(setq linum-format "%4d ")
-;(global-set-key [f6] 'linum-mode)
+;  (bind-keys :map company-mode-map
+;             ("C-i" . company-complete))
+  (bind-keys :map company-active-map
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous)
+             ("C-s" . company-search-words-regexp))
+  (bind-keys :map company-search-map
+             ("C-n" . company-select-next)
+             ("C-p" . company-select-previous)))
+
+;;; === smartparens-mode ===
+(use-package smartparens
+  :diminish smartparens-mode
+  :config
+  (smartparens-global-mode))
+
+;;; === elscreen-mode ===
+(use-package elscreen
+  :config
+  (setq elscreen-prefix-key (kbd "C-t"))
+  (elscreen-start)
+  ;;; タブの先頭に[X]を表示しない
+  (setq elscreen-tab-display-kill-screen nil)
+  ;;; header-lineの先頭に[<->]を表示しない
+  (setq elscreen-tab-display-control nil))
+
+;;(eval-after-load 'clojure-mode
+;;  '(progn
+;;    (define-key clojure-mode-map (kbd "C-c C-h") #'clojure-cheatsheet)))
 
 (global-set-key (kbd "C-x C-b") 'anything-for-files)
 (global-set-key (kbd "M-y") 'anything-show-kill-ring)
 (global-set-key (kbd "M-o") 'occur-by-moccur)
-(setq elscreen-prefix-key (kbd "C-t"))
+
 (setq moccur-split-word t)
-(require 'wgrep nil t)
+;(require 'wgrep nil t)
+
 
 ;;; cua-modeの設定
 (cua-mode t)

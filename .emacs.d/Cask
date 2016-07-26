@@ -42,8 +42,5 @@
 (depends-on "cider")
 (depends-on "ac-cider")
 (depends-on "clojure-cheatsheet")
-(depends-on "slamhound")
 (depends-on "clj-refactor")
-
-(depends-on "smartparens")
 (depends-on "rainbow-delimiters")

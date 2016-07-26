@@ -36,6 +36,7 @@
 ;;(depends-on "anything-c-moccur" :git "https://github.com/takaji/anything-c-moccur.git")
 (depends-on "simpleclip")
 (depends-on "company")
+(depends-on "real-auto-save" :git "https://github.com/chillaranand/real-auto-save")
 
 ;; Clojure
 (depends-on "clojure-mode")

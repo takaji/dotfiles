@@ -27,6 +27,13 @@
 
 ;(set-fontset-font t 'japanese-jisx0208 (font-spec :family "Meiryo"))
 
+;; カーソル行に下線を表示
+(setq hl-line-face 'underline)
+(global-hl-line-mode)
+
+;; 現在行をハイライト
+;;(global-hl-line-mode t)
+
 ;; フォントロックモード (強調表示等) を有効にする
 (global-font-lock-mode t)
 
@@ -56,9 +63,6 @@
 
 ;; メニューバーを消す
 (menu-bar-mode -1)
-
-;; 現在行をハイライト
-;;(global-hl-line-mode t)
 
 ;; C-h でカーソルの左にある文字を消す
 (define-key global-map "\C-h" 'delete-backward-char)
@@ -218,6 +222,13 @@
   (setq elscreen-tab-display-kill-screen nil)
   ;;; header-lineの先頭に[<->]を表示しない
   (setq elscreen-tab-display-control nil))
+
+;;; === real-auto-save ===
+(use-package real-auto-save
+  :config
+  (setq real-auto-save-interval 1)
+  (add-hook 'prog-mode-hook 'real-auto-save-mode)
+  (add-hook 'find-file-hook 'real-auto-save-mode))
 
 ;;(eval-after-load 'clojure-mode
 ;;  '(progn

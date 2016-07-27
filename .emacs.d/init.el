@@ -27,12 +27,14 @@
 
 ;(set-fontset-font t 'japanese-jisx0208 (font-spec :family "Meiryo"))
 
+(load-theme 'misterioso t)
+
 ;; カーソル行に下線を表示
 (setq hl-line-face 'underline)
 (global-hl-line-mode)
 
 ;; 現在行をハイライト
-;;(global-hl-line-mode t)
+;(global-hl-line-mode t)
 
 ;; フォントロックモード (強調表示等) を有効にする
 (global-font-lock-mode t)
@@ -177,7 +179,7 @@
   :diminish subword-mode
   :config
   (setq nrepl-log-messages t
-        cider-repl-display-in-current-window t
+;        cider-repl-display-in-current-window t
         cider-repl-use-clojure-font-lock t
         cider-prompt-save-file-on-load 'always-save
         cider-font-lock-dynamically '(macro core function var)
@@ -187,7 +189,7 @@
 ;;; === clj-refactor-mode ===
 (use-package clj-refactor
   :diminish clj-refactor-mode
-  :config (cljr-add-keybindings-with-prefix "C-c j"))
+  :config (cljr-add-keybindings-with-prefix "C-c C-j"))
 
 ;;; === company-mode ===
 (use-package company
@@ -210,13 +212,13 @@
 ;;; === smartparens-mode ===
 (use-package smartparens
   :diminish smartparens-mode
-  :config
+  :init
   (smartparens-global-mode))
 
 ;;; === elscreen-mode ===
 (use-package elscreen
   :config
-  (setq elscreen-prefix-key (kbd "C-t"))
+  (setq elscreen-prefix-key (kbd "C-z"))
   (elscreen-start)
   ;;; タブの先頭に[X]を表示しない
   (setq elscreen-tab-display-kill-screen nil)
@@ -250,3 +252,4 @@
 (simpleclip-mode t)
 (global-set-key (kbd "C-c w") 'simpleclip-copy) ; C-c wでクリップボードにコピー
 (global-set-key (kbd "C-c y") 'simpleclip-paste) ; C-c yでクリップボードからペースト
+

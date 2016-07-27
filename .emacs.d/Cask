@@ -37,6 +37,7 @@
 (depends-on "simpleclip")
 (depends-on "company")
 (depends-on "real-auto-save" :git "https://github.com/chillaranand/real-auto-save")
+(depends-on "color-theme-sanityinc-tomorrow")
 
 ;; Clojure
 (depends-on "clojure-mode")

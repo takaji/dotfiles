@@ -236,7 +236,7 @@
 ;;  '(progn
 ;;    (define-key clojure-mode-map (kbd "C-c C-h") #'clojure-cheatsheet)))
 
-(global-set-key (kbd "C-x C-b") 'anything-for-files)
+;;(global-set-key (kbd "C-x C-b") 'anything-for-files)
 (global-set-key (kbd "M-y") 'anything-show-kill-ring)
 (global-set-key (kbd "M-o") 'occur-by-moccur)
 
@@ -252,4 +252,10 @@
 (simpleclip-mode t)
 (global-set-key (kbd "C-c w") 'simpleclip-copy) ; C-c wでクリップボードにコピー
 (global-set-key (kbd "C-c y") 'simpleclip-paste) ; C-c yでクリップボードからペースト
+
+;;; Helm
+(require 'helm-config)
+(global-set-key (kbd "C-c h") 'helm-mini)
+(helm-mode 1)
+
 

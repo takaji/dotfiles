@@ -67,7 +67,7 @@ setopt auto_param_slash
 ## 補完候補のカーソル選択を有効に
 zstyle ':completion:*:default' menu select=1
 ## 補完候補の色づけ
-eval `dircolors`
+#eval `dircolors`
 export ZLS_COLORS=$LS_COLORS
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 ## 補完候補一覧でファイルの種別をマーク表示
@@ -156,7 +156,8 @@ setopt nobeep
 #########
 # Alias
 #########
-alias ls='ls -F --show-control-chars --color=aut'
+#alias ls='ls -F --show-control-chars --color=aut'
+alias ls='ls'
 alias ll='ls -ltr'
 alias la='ls -a'
 alias lal='ls -al'

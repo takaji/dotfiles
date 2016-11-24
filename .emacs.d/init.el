@@ -1,4 +1,13 @@
-(require 'cask "~/.cask/cask.el")
+;(require 'cask "~/.cask/cask.el")
+
+;; Added by Package.el.  This must come before configurations of
+;; installed packages.  Don't delete this line.  If you don't want it,
+;; just comment it out by adding a semicolon to the start of the line.
+;; You may delete these explanatory comments.
+(package-initialize)
+
+(require 'cask "/usr/local/opt/cask/cask.el")
+
 
 (cask-initialize)
 
@@ -247,6 +256,7 @@
 ;;; cua-modeの設定
 (cua-mode t)
 (setq cua-enable-cua-keys nil)  ; CUAキーバインドを無効にする
+(define-key global-map (kbd "C-x SPC") 'cua-set-rectangle-mark)
 
 ;;; simpleclipの設定
 (simpleclip-mode t)
